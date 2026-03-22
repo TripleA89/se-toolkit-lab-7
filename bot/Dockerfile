@@ -5,10 +5,8 @@ WORKDIR /app
 # Install uv
 RUN pip install uv
 
-# Copy project files
-COPY pyproject.toml uv.lock ./
-COPY bot/ ./bot/
-COPY config.py ./
+# Copy all files from bot directory (context is ./bot)
+COPY . .
 
 # Install dependencies
 RUN uv sync --frozen
@@ -19,4 +17,4 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Run the bot
-CMD ["uv", "run", "python", "bot/bot.py"]
+CMD ["uv", "run", "python", "bot.py"]
