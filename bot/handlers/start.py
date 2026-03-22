@@ -1,6 +1,7 @@
 """Handler for /start command."""
 
 from config import get_bot_token
+from handlers.keyboard import get_quick_actions_keyboard, format_keyboard_message
 
 
 def handle_start() -> str:
@@ -17,4 +18,5 @@ def handle_start() -> str:
         bot_id = bot_token.split(":")[0]
         bot_name = f"Bot #{bot_id}"
     
-    return f"Welcome to {bot_name}! Use /help to see available commands."
+    message = f"Welcome to {bot_name}! I can help you check labs, scores, and student performance."
+    return format_keyboard_message(message, get_quick_actions_keyboard())
