@@ -1,10 +1,12 @@
 """Configuration loader from environment variables."""
 
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables from .env.bot.secret
-load_dotenv(".env.bot.secret")
+# Load environment variables from .env.bot.secret in parent directory
+env_path = Path(__file__).parent.parent / ".env.bot.secret"
+load_dotenv(env_path)
 
 
 def get_bot_token() -> str | None:
