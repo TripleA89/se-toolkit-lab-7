@@ -7,6 +7,7 @@ from handlers.help import handle_help
 from handlers.health import handle_health
 from handlers.labs import handle_labs
 from handlers.scores import handle_scores
+from handlers.message import handle_message
 
 
 def get_handler(command: str):
@@ -32,12 +33,19 @@ def run_test_mode(command: str) -> None:
     """Run a command in test mode and print result to stdout.
     
     Args:
-        command: Full command string (e.g., '/start' or '/scores lab-04').
+        command: Full command string (e.g., '/start' or '/scores lab-04' or plain text).
     """
     # Split command and arguments
     parts = command.strip().split()
     cmd_name = parts[0].lstrip('/')
     args = parts[1:] if len(parts) > 1 else []
+    
+    # Check if it's a slash command or plain text
+    if not command.strip().startswith('/'):
+        # Plain text message - use LLM routing
+        result = handle_message(command.strip())
+        print(result)
+        sys.exit(0)
     
     handler = get_handler(cmd_name)
     if handler is None:
